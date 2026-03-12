@@ -1,0 +1,30 @@
+{
+  "model": {
+    "name": "all-mpnet-base-v2",
+    "repository": "https://huggingface.co/sentence-transformers/all-mpnet-base-v2",
+    "embeddings": {
+      "model_name": "all-mpnet-base-v2",
+      "cache_folder": null,
+      "model_kwargs": {
+        "device": "cpu"
+      },
+      "encode_kwargs": {
+        "normalize_embeddings": true
+      },
+      "query_encode_kwargs": {},
+      "multi_process": false,
+      "show_progress": false
+    }
+  },
+  "knowledge_base": {
+    "total_documents": 34,
+    "total_chunks": 553
+  },
+  "faiss": {
+    "persist_directory": "faiss_db\\"
+  },
+  "processing": {
+    "time_seconds": 488.96131134033203,
+    "chunks_per_second": 1.1309688254969013
+  }
+}

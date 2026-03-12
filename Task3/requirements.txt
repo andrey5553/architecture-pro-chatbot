@@ -1,0 +1,6 @@
+tqdm
+langchain-text-splitters
+langchain-huggingface
+langchain-community
+faiss-cpu
+sentence-transformers
