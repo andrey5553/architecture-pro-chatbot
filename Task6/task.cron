@@ -1,0 +1,1 @@
+schtasks /create /tn "UpdateIndexTask" /sc daily /st 06:00 /ru SYSTEM /tr "cmd /c python.exe e:\1\7\update_index.py >> C:\1\7\index_update.log 2>&1"

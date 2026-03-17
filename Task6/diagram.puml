@@ -1,0 +1,63 @@
+@startuml
+!theme plain
+title Архитектура процесса обновления векторного индекса
+
+actor "Планировщик" as Scheduler
+actor "Пользователь" as User
+
+package "Система обновления индекса" {
+    
+    database "Источник данных" as Source
+    file "docs/" as Docs
+    
+    component "Скрипт update_index.py" as Script {
+        component "DirectoryLoader" as Loader
+        component "TextSplitter" as Splitter
+        component "HuggingFaceEmbeddings" as Embeddings
+        component "FAISS VectorStore" as VectorStore
+    }
+    
+    database "Векторный индекс" as Index
+    file "vector_store/" as Store
+    
+    database "Логирование" as Log
+    file "update.log" as LogFile
+}
+
+Scheduler --> Script : Запуск по расписанию
+User --> Script : Ручной запуск
+
+Script --> Docs : Читает файлы
+Docs --> Loader : .txt, .md файлы
+
+Loader --> Splitter : Документы
+Splitter --> Embeddings : Чанки (1000 символов)
+Embeddings --> VectorStore : Эмбеддинги
+VectorStore --> Store : Сохраняет индекс
+
+Script --> LogFile : Записывает события
+
+note right of Splitter
+  Размер чанка: 1000
+  Перекрытие: 100
+end note
+
+note right of Embeddings
+  Модель: paraphrase-multilingual
+  Устройство: CPU
+end note
+
+note right of LogFile
+  - Время запуска
+  - Кол-во документов
+  - Кол-во чанков
+  - Ошибки
+  - Время выполнения
+end note
+
+note right of Store
+  index.faiss
+  index.pkl
+end note
+
+@enduml
