@@ -1,0 +1,7 @@
+timestamp,query,num_sources,response_length,success,sources
+1773775805,Расскажи о персонаже Виктор Стоун,5,502,True,"\18 - Знатный холостяк.txt
+\22 - Загадка Торского моста.txt
+\02 - В Сиреневой Сторожке.txt
+\07 - Человек на четвереньках.txt
+\04 - Исчезновение леди Фрэнсис Карфэкс.txt","has_sources=True, has_expected=True, has_unexpected=False"
+1773775805,Расскажи о персонаже Джон Траволта,0,76,True,,"has_sources=False, has_expected=True, has_unexpected=False"
