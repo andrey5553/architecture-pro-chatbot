@@ -1,0 +1,90 @@
+@startuml
+' Настройки стиля
+skinparam participant {
+  BackgroundColor White
+  BorderColor Black
+  FontColor Black
+}
+
+actor "CoverageTester" as T
+participant "RAGBot" as B
+participant "VectorIndex" as I
+participant "RelevanceChecker" as RC
+participant "ResponseGenerator" as R
+database "CSV Logger" as L
+
+== Тест 1: Виктор Стоун (должен найти) ==
+
+T -> B: ask("Расскажи о персонаже Виктор Стоун")
+activate B
+
+B -> I: similarity_search("Виктор Стоун", k=5)
+activate I
+note right of I: Поиск ближайших векторов
+I --> B: return 5 documents (о Викторе Стоуне)
+deactivate I
+
+B -> RC: _is_relevant(query, documents)
+activate RC
+note right of RC: Извлекает сущности: ["виктор", "стоун"]\nПроверяет наличие в документах
+RC --> B: return True (релевантно)
+deactivate RC
+
+B -> R: generate_response(sources, query)
+activate R
+note right of R: Генерация ответа на основе\nрелевантных документов
+R --> B: return response text
+deactivate R
+
+B --> T: return response object\n(num_sources=5)
+deactivate B
+
+T -> T: Проверка ключевых слов\n["сыщик", "детектив", "расследование"]
+note right of T: ✓ Найдены ожидаемые слова\n✓ success = True
+
+T -> L: write_log(success=True, sources=5)
+
+== Тест 2: Джон Траволта (НЕ должен найти) ==
+
+T -> B: ask("Расскажи о персонаже Джон Траволта")
+activate B
+
+B -> I: similarity_search("Джон Траволта", k=5)
+activate I
+note right of I: Векторный поиск находит\nближайшие документы
+I --> B: return 5 documents\n(о Викторе Стоуне, Шерлоке Холмсе)
+note right: ⚠️ Векторное сходство есть,\nно семантической связи нет
+deactivate I
+
+B -> RC: _is_relevant(query, documents)
+activate RC
+note right of RC: Извлекает сущности: ["джон", "траволта"]\nПроверяет наличие в документах
+RC --> B: return False (не релевантно)
+note right: ✓ Сущности не найдены\nв документах
+deactivate RC
+
+B -> B: Формирует ответ об отсутствии\nинформации
+
+B --> T: return response object\n("Извините, информация не найдена",\nnum_sources=0)
+deactivate B
+
+T -> T: Проверка нежелательных слов\n["шерлок", "холмс", "детектив"]
+note right of T: ✓ Нежелательные слова не найдены\n✓ Нет источников\n✓ success = True
+
+T -> L: write_log(success=True, sources=0)
+
+== Сравнение поведения ==
+
+note over T,L
+  **Ключевые улучшения:**
+  1. Добавлен RelevanceChecker
+  2. Извлечение именованных сущностей
+  3. Проверка наличия сущностей в документах
+  4. Корректная обработка нерелевантных запросов
+  
+  **Результат:**
+  - Тест 1: ✓ Найдена информация о Викторе Стоуне
+  - Тест 2: ✓ Нет ложных срабатываний по Джону Траволте
+end note
+
+@enduml

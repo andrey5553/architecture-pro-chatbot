@@ -1,0 +1,1 @@
+C:\Users\mikhailenko.a\AppData\Local\Programs\Ollama\ollama.exe pull llama3.1

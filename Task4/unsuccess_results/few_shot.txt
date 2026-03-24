@@ -1,0 +1,24 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Инициализация RAG бота...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3384.78it/s]
+[1mMPNetModel LOAD REPORT[0m from: sentence-transformers/all-mpnet-base-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Отправка запроса: 'Расскажи о Вавилене Татарском'
+Тип промпта: few-shot
+
+==================================================
+ОТВЕТ:
+==================================================
+Вопрос не связан с предоставленным контекстом. Вопросы и ответы были о Викторе Стоуне, а Вавилен Татарский не упоминался.
+==================================================
+Найдено источников: 3
+
+ИСТОЧНИКИ:
+1. \34 - Этюд в багровых тонах.txt (чанк: 34 - Этюд в багровых тонах.txt_36)
+2. \02 - В Сиреневой Сторожке.txt (чанк: 02 - В Сиреневой Сторожке.txt_0)
+3. \04 - Исчезновение леди Фрэнсис Карфэкс.txt (чанк: 04 - Исчезновение леди Фрэнсис Карфэкс.txt_13)

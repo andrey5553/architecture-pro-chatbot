@@ -1,0 +1,19 @@
+# Основные зависимости
+langchain-community>=0.4.1
+langchain-text-splitters>=1.1.1
+faiss-cpu>=1.9.0
+
+# Для эмбеддингов (локальная замена OpenAI)
+sentence-transformers>=3.4.1
+torch>=2.6.0
+transformers>=4.48.3
+
+# Для загрузки документов
+unstructured>=0.16.0
+python-magic-bin>=0.4.14  # для libmagic (опционально)
+
+# Для работы с переменными окружения
+python-dotenv>=1.0.0
+
+# Для работы с файлами
+pathlib>=1.0.1
